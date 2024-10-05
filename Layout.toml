@@ -1,0 +1,16 @@
+# Every field in a theme file is optional.
+
+# First come some various options
+shadow = false  # Don't draw shadows around stacked views
+borders = "simple"  # Alternatives are "none" and "outset"
+
+# Here we define the color palette.
+[colors]
+highlight = "#191970"
+highlight_inactive = "#191970"
+title_primary   = "#641E16"
+background = "#0C154E"
+
+
+button = "#191970" 
+button_secondary = "#191970"
