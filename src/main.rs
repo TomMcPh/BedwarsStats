@@ -23,7 +23,7 @@ use csv::Reader;
 - Set mvp++ and mvp+ ranks depending on hypixel level
 */
 
-const API_KEY: &str = "b89896a1-7020-4880-9182-271b24f95970";
+const API_KEY: &str = /*Add your API key here */;
 
 
 /* Rough reference from Plancke.io */
