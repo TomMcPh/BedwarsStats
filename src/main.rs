@@ -637,88 +637,7 @@ fn stat_page(siv: &mut Cursive) {
     );
 }
 
-fn readcsv(username: &str) -> StyledString {
-    let file = OpenOptions::new()
-        .read(true)
 
-    // Create a CSV reader
-    let mut rdr = Reader::from_reader(file);
-
-    // Initialize the StyledString
-    let mut result = StyledString::plain("");
-
-    // Skip the first row (headers)
-    let _ = rdr.records().next();
-
-    // Initialize a variable to hold the first and last record
-    let mut first_record: Option<csv::StringRecord> = None;
-    let mut last_record: Option<csv::StringRecord> = None;
-
-    // Iterate through all records and keep track of the first and last matching records
-    for record in rdr.records() {
-        if let Ok(record) = record {
-            // Trim whitespaces from the username and CSV value
-            if record.get(0).map(|s| s.trim()) == Some(username.trim()) {
-                if first_record.is_none() {
-                    first_record = Some(record.clone());
-                }
-                last_record = Some(record);
-            }
-        }
-    }
-
-    // Check if both first and last records are found
-    if let (Some(first), Some(last)) = (first_record, last_record) {
-        let diff = |f: usize, l: usize| -> i32 {
-            let first_val: i32 = first.get(f).unwrap_or("0").trim().parse().unwrap_or(0);
-            let last_val: i32 = last.get(l).unwrap_or("0").trim().parse().unwrap_or(0);
-            last_val - first_val
-        };
-
-        result.append_plain("Games Played: ");
-        result.append_styled(format!("{}\n", diff(2, 2)), Style::from(Color::Light(BaseColor::Black)));
-
-        result.append_plain("Games Won: ");
-        result.append_styled(format!("{}\n", diff(3, 3)), Style::from(Color::Light(BaseColor::Black)));
-
-        result.append_plain("Games Lost: ");
-        result.append_styled(format!("{}\n", diff(4, 4)), Style::from(Color::Light(BaseColor::Black)));
-
-        result.append_plain("WLR: ");
-        result.append_styled(format!("{}\n", diff(5, 5)), Style::from(Color::Light(BaseColor::Black)));
-
-        result.append_plain("Final Kills: ");
-        result.append_styled(format!("{}\n", diff(6, 6)), Style::from(Color::Light(BaseColor::Black)));
-
-        result.append_plain("Final Deaths: ");
-        result.append_styled(format!("{}\n", diff(7, 7)), Style::from(Color::Light(BaseColor::Black)));
-
-        result.append_plain("FKDR: ");
-        result.append_styled(format!("{}\n", diff(8, 8)), Style::from(Color::Light(BaseColor::Black)));
-
-        result.append_plain("Kills: ");
-        result.append_styled(format!("{}\n", diff(9, 9)), Style::from(Color::Light(BaseColor::Black)));
-
-        result.append_plain("Deaths: ");
-        result.append_styled(format!("{}\n", diff(10, 10)), Style::from(Color::Light(BaseColor::Black)));
-
-        result.append_plain("KDR: ");
-        result.append_styled(format!("{}\n", diff(11, 11)), Style::from(Color::Light(BaseColor::Black)));
-
-        result.append_plain("Beds Broken: ");
-        result.append_styled(format!("{}\n", diff(12, 12)), Style::from(Color::Light(BaseColor::Black)));
-
-        result.append_plain("Beds Lost: ");
-        result.append_styled(format!("{}\n", diff(13, 13)), Style::from(Color::Light(BaseColor::Black)));
-
-        result.append_plain("BBLR: ");
-        result.append_styled(format!("{}\n", diff(14, 14)), Style::from(Color::Light(BaseColor::Black)));
-    } else {
-        result.append_plain("No records found for the username.\n");
-    }
-
-    result
-}
 
 
 fn player_session(siv: &mut Cursive, username: String) {
@@ -736,7 +655,7 @@ fn player_session(siv: &mut Cursive, username: String) {
                             LinearLayout::vertical()
                                 .child(Dialog::text(username_with_rank))
                                 /*.child(Dialog::text(basesession()))*/
-                                .child(Dialog::text(readcsv(&username_caps)))
+                                //.child(Dialog::text(readcsv(&username_caps)))
                                 /*WORKS*/
                                 /*We need to run some checks to tell which is to be run!
                                 - Also need to do the maths for the inputs
